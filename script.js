@@ -4,7 +4,7 @@ async function getChatGPTResponse(userMessage) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer sk-...6wN0', // Replace with your actual API key
+      'Authorization': 'Bearer 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', // Replace with your actual API key
     },
     body: JSON.stringify({
       'messages': [{'role': 'system', 'content': 'You are a user'}, {'role': 'user', 'content': userMessage}],
@@ -12,7 +12,7 @@ async function getChatGPTResponse(userMessage) {
   });
 
   const { choices } = await response.json();
-  const botReply = choices[0].message.content;
+  const botReply = choices.find(choice => choice.role === 'assistant').message.content;
 
   return botReply;
 }
@@ -22,12 +22,10 @@ async function handleUserInput() {
   const userInput = document.getElementById('user-input').value.trim();
 
   if (userInput !== '') {
-    addMessageToLog(userInput, 'user');
-    document.getElementById('user-input').value = ''; // Clear input field
-
     const botResponse = await getChatGPTResponse(userInput);
-
+    addMessageToLog(userInput, 'user');
     addMessageToLog(botResponse, 'bot');
+    document.getElementById('user-input').value = ''; // Clear input field
   }
 }
 
