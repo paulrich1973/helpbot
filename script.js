@@ -1,4 +1,4 @@
-// Function to send user input to the ChatGPT API and get a response
+// Function to send user input to the ChatGPT API and get a responses
 async function getChatGPTResponse(userMessage) {
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
